@@ -1,0 +1,6 @@
+<h1>Example Component</h1>
+<h2>{{ message }}</h2> 
+<button (click)="toggleVisibility()">Toggle List</button>
+<ul *ngIf="isVisible">
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
