@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { HttpDemoComponent } from './http-demo/http-demo.component';
 import { PipesDemoComponent } from './pipes-demo/pipes-demo.component';
+import { CapitalizePipe } from './capitalize.pipe';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { PipesDemoComponent } from './pipes-demo/pipes-demo.component';
     FormsComponent,
     HttpDemoComponent,
     PipesDemoComponent,
+    CapitalizePipe,
 
   ],
   imports: [
