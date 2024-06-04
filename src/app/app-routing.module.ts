@@ -7,6 +7,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { CustomerAccessComponent } from './customer-access/customer-access.component';
 import { FormsComponent } from './forms/forms.component';
 import { HttpDemoComponent } from './http-demo/http-demo.component';
+import { PipesDemoComponent } from './pipes-demo/pipes-demo.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/example', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'customer', component: CustomerComponent },
   { path: 'customer-access', component: CustomerAccessComponent },
   { path: 'forms', component: FormsComponent },
-  { path: 'http-demo', component: HttpDemoComponent }
+  { path: 'http-demo', component: HttpDemoComponent },
+  { path: 'pipes', component: PipesDemoComponent },
 ];
 
 
