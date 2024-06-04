@@ -1,0 +1,8 @@
+<p>customerComponent works!</p>
+<div>
+  <h2>Customer Details</h2>
+  <p>Name: {{ customerName }}</p>
+  <p>Age: {{ customerAge }}</p>
+  <p *ngIf="isPremium">Premium Customer</p>
+  <p *ngIf="!isPremium">Regular Customer</p>
+</div>

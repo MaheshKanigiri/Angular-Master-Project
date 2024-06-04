@@ -1,0 +1,224 @@
+### 6. Directives
+
+Directives in Angular are used to extend the functionality of HTML elements in your application.
+There are three types of directives:
+
+1. **Component Directives**
+2. **Structural Directives**
+3. **Attribute Directives**
+
+---
+
+### Practical Implementation
+
+#### Step 1: Creating a New Component
+
+Let's create a new component to demonstrate the use of directives.
+
+1. **Generate a New Component**
+
+   - Open the terminal in your project directory and run:
+     ```bash
+     ng generate component customer
+     ```
+
+2. **Basic Setup for `CustomerComponent`**
+
+   - Open `src/app/customer/customer.component.ts` and set up the component:
+     ```typescript
+     import { Component } from '@angular/core';
+
+     @Component({
+       selector: 'app-customer',
+       templateUrl: './customer.component.html',
+       styleUrls: ['./customer.component.css']
+     })
+     export class CustomerComponent {
+       customerName: string = 'Jane Doe';
+       customerAge: number = 28;
+       isPremium: boolean = true;
+     }
+     ```
+
+   - Open `src/app/customer/customer.component.html` and create a basic template:
+     ```html
+     <div>
+       <h2>Customer Details</h2>
+       <p>Name: {{ customerName }}</p>
+       <p>Age: {{ customerAge }}</p>
+       <p *ngIf="isPremium">Premium Customer</p>
+       <p *ngIf="!isPremium">Regular Customer</p>
+     </div>
+     ```
+
+3. **Use the New Component in the App**
+
+   - Open `src/app/app.component.html` and include the `customer` component:
+     ```html
+     <h1>Welcome to My Angular App!</h1>
+     <app-customer></app-customer>
+     ```
+
+4. **Serve the Application**
+
+   - Run the application:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser to see the customer details displayed.
+
+#### Step 2: Structural Directives
+
+Structural directives alter the structure of the DOM.
+
+1. **ngIf**
+
+   - You already used `*ngIf` in `customer.component.html` to conditionally display content based on
+   the value of `isPremium`.
+
+2. **ngFor**
+
+   - Modify `CustomerComponent` to include a list of orders:
+     ```typescript
+     export class CustomerComponent {
+       customerName: string = 'Jane Doe';
+       customerAge: number = 28;
+       isPremium: boolean = true;
+       orders: string[] = ['Order 1', 'Order 2', 'Order 3'];
+     }
+     ```
+
+   - Update `customer.component.html` to display the list of orders using `*ngFor`:
+     ```html
+     <div>
+       <h2>Customer Details</h2>
+       <p>Name: {{ customerName }}</p>
+       <p>Age: {{ customerAge }}</p>
+       <p *ngIf="isPremium">Premium Customer</p>
+       <p *ngIf="!isPremium">Regular Customer</p>
+
+       <h3>Orders</h3>
+       <ul>
+         <li *ngFor="let order of orders">{{ order }}</li>
+       </ul>
+     </div>
+     ```
+
+3. **ngSwitch**
+
+   - Modify `CustomerComponent` to include a status property:
+     ```typescript
+     export class CustomerComponent {
+       customerName: string = 'Jane Doe';
+       customerAge: number = 28;
+       isPremium: boolean = true;
+       orders: string[] = ['Order 1', 'Order 2', 'Order 3'];
+       status: string = 'active'; // could be 'active', 'inactive', 'pending'
+     }
+     ```
+
+   - Update `customer.component.html` to use `ngSwitch` for the status:
+     ```html
+     <div>
+       <h2>Customer Details</h2>
+       <p>Name: {{ customerName }}</p>
+       <p>Age: {{ customerAge }}</p>
+       <p *ngIf="isPremium">Premium Customer</p>
+       <p *ngIf="!isPremium">Regular Customer</p>
+
+       <h3>Orders</h3>
+       <ul>
+         <li *ngFor="let order of orders">{{ order }}</li>
+       </ul>
+
+       <h3>Status</h3>
+       <div [ngSwitch]="status">
+         <p *ngSwitchCase="'active'">Active Customer</p>
+         <p *ngSwitchCase="'inactive'">Inactive Customer</p>
+         <p *ngSwitchCase="'pending'">Pending Customer</p>
+         <p *ngSwitchDefault>Unknown Status</p>
+       </div>
+     </div>
+     ```
+
+#### Step 3: Attribute Directives
+
+Attribute directives change the appearance or behavior of an element.
+
+1. **ngClass**
+
+   - Add CSS classes to `customer.component.css`:
+     ```css
+     .premium {
+       color: green;
+     }
+     .regular {
+       color: red;
+     }
+     ```
+
+   - Update `customer.component.html` to use `ngClass`:
+     ```html
+     <div>
+       <h2>Customer Details</h2>
+       <p>Name: {{ customerName }}</p>
+       <p>Age: {{ customerAge }}</p>
+       <p [ngClass]="{'premium': isPremium, 'regular': !isPremium}">
+         {{ isPremium ? 'Premium Customer' : 'Regular Customer' }}
+       </p>
+
+       <h3>Orders</h3>
+       <ul>
+         <li *ngFor="let order of orders">{{ order }}</li>
+       </ul>
+
+       <h3>Status</h3>
+       <div [ngSwitch]="status">
+         <p *ngSwitchCase="'active'">Active Customer</p>
+         <p *ngSwitchCase="'inactive'">Inactive Customer</p>
+         <p *ngSwitchCase="'pending'">Pending Customer</p>
+         <p *ngSwitchDefault>Unknown Status</p>
+       </div>
+     </div>
+     ```
+
+2. **ngStyle**
+
+   - Update `customer.component.html` to use `ngStyle` for inline styles:
+     ```html
+     <div>
+       <h2>Customer Details</h2>
+       <p>Name: {{ customerName }}</p>
+       <p>Age: {{ customerAge }}</p>
+       <p [ngClass]="{'premium': isPremium, 'regular': !isPremium}">
+         {{ isPremium ? 'Premium Customer' : 'Regular Customer' }}
+       </p>
+
+       <h3>Orders</h3>
+       <ul>
+         <li *ngFor="let order of orders">{{ order }}</li>
+       </ul>
+
+       <h3>Status</h3>
+       <div [ngSwitch]="status">
+         <p *ngSwitchCase="'active'" [ngStyle]="{'font-weight': 'bold', 'color': 'blue'}">Active Customer</p>
+         <p *ngSwitchCase="'inactive'" [ngStyle]="{'font-weight': 'bold', 'color': 'gray'}">Inactive Customer</p>
+         <p *ngSwitchCase="'pending'" [ngStyle]="{'font-weight': 'bold', 'color': 'orange'}">Pending Customer</p>
+         <p *ngSwitchDefault [ngStyle]="{'font-weight': 'bold', 'color': 'black'}">Unknown Status</p>
+       </div>
+     </div>
+     ```
+
+3. **Serve the Application**
+
+   - Run the application and verify the directives:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser to see the conditional styling and directive effects.
+
+---
+
+This concludes the "Directives" section. You've now learned how to use structural and attribute
+directives in Angular. Let me know when you're ready to move on to the next topic or if you have
+any questions!
