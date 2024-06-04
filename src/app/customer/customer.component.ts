@@ -9,4 +9,8 @@ export class CustomerComponent {
   customerName: string = 'Jane Doe';
   customerAge: number = 28;
   isPremium: boolean = true;
+
+  orders: string[] = ['Order 1', 'Order 2', 'Order 3'];
+
+  status: string = 'active'; // could be 'active', 'inactive', 'pending'
 }

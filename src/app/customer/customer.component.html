@@ -5,4 +5,17 @@
   <p>Age: {{ customerAge }}</p>
   <p *ngIf="isPremium">Premium Customer</p>
   <p *ngIf="!isPremium">Regular Customer</p>
+  <!--ngFor-->
+  <h3>Orders</h3>
+  <ul>
+    <li *ngFor="let order of orders">{{ order }}</li>
+  </ul>
+  <!--ngSwitch-->
+  <h3>Status</h3>
+  <div [ngSwitch]="status">
+    <p *ngSwitchCase="'active'">Active Customer</p>
+    <p *ngSwitchCase="'inactive'">Inactive Customer</p>
+    <p *ngSwitchCase="'pending'">Pending Customer</p>
+    <p *ngSwitchDefault>Unknown Status</p>
+  </div>
 </div>
