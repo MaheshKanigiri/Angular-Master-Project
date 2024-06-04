@@ -1,0 +1,165 @@
+### 3. Getting Started with Angular
+
+#### Creating a New Angular Project
+
+Since you've already created your Angular project (`my-angular-app`), let's review the basic steps and
+explore the project structure in more detail.
+
+1. **Create a New Angular Project (Review)**
+   - If you need to create another project, use:
+     ```bash
+     ng new my-angular-app
+     ```
+
+2. **Project Structure**
+   - Let's break down the main directories and files in `my-angular-app`:
+
+     ```
+     my-angular-app/
+     ├── e2e/                         # End-to-end tests
+     ├── node_modules/                # Project dependencies
+     ├── src/                         # Source code
+     │   ├── app/                     # Angular application
+     │   │   ├── example/             # Example component (we created this earlier)
+     │   │   ├── app.module.ts        # Root module
+     │   │   ├── app.component.ts     # Root component TypeScript file
+     │   │   ├── app.component.html   # Root component HTML file
+     │   │   ├── app.component.css    # Root component CSS file
+     │   │   └── app.component.spec.ts# Root component test file
+     │   ├── assets/                  # Static assets (images, fonts, etc.)
+     │   ├── environments/            # Environment-specific configurations
+     │   ├── index.html               # Main HTML file
+     │   ├── main.ts                  # Entry point of the application
+     │   ├── polyfills.ts             # Polyfills needed by Angular
+     │   ├── styles.css               # Global styles
+     │   └── test.ts                  # Test configuration
+     ├── angular.json                 # Angular CLI configuration
+     ├── package.json                 # Project metadata and dependencies
+     ├── tsconfig.json                # TypeScript configuration
+     ├── tslint.json                  # TSLint configuration
+     └── README.md                    # Project README file
+     ```
+
+#### Angular CLI
+
+The Angular CLI (Command Line Interface) is a powerful tool that helps you create and manage Angular projects.
+Here are some common Angular CLI commands:
+
+1. **Generate Components, Services, etc.**
+   - To generate a new component:
+     ```bash
+     ng generate component new-component
+     ```
+   - To generate a new service:
+     ```bash
+     ng generate service new-service
+     ```
+
+2. **Serve the Application**
+   - To run the development server and serve the application:
+     ```bash
+     ng serve
+     ```
+
+3. **Build the Application**
+   - To build the application for production:
+     ```bash
+     ng build --prod
+     ```
+
+4. **Run Tests**
+   - To run unit tests:
+     ```bash
+     ng test
+     ```
+   - To run end-to-end tests:
+     ```bash
+     ng e2e
+     ```
+
+#### Practical Implementation
+
+Let's enhance your `my-angular-app` by creating a new component and a service, and using them together.
+
+1. **Generate a New Component**
+   - Open the terminal in your project directory and run:
+     ```bash
+     ng generate component user-profile
+     ```
+
+2. **Generate a New Service**
+   - Run the following command to generate a new service:
+     ```bash
+     ng generate service user
+     ```
+
+3. **Implement the Service**
+
+   - Open `src/app/user.service.ts` and add a method to get user data:
+     ```typescript
+     import { Injectable } from '@angular/core';
+
+     @Injectable({
+       providedIn: 'root'
+     })
+     export class UserService {
+       constructor() { }
+
+       getUser() {
+         return { name: 'John Doe', age: 30 };
+       }
+     }
+     ```
+
+4. **Use the Service in the Component**
+
+   - Open `src/app/user-profile/user-profile.component.ts` and inject the `UserService`:
+     ```typescript
+     import { Component, OnInit } from '@angular/core';
+     import { UserService } from '../user.service';
+
+     @Component({
+       selector: 'app-user-profile',
+       templateUrl: './user-profile.component.html',
+       styleUrls: ['./user-profile.component.css']
+     })
+     export class UserProfileComponent implements OnInit {
+       user: { name: string, age: number };
+
+       constructor(private userService: UserService) { }
+
+       ngOnInit(): void {
+         this.user = this.userService.getUser();
+       }
+     }
+     ```
+
+   - Update the template (`src/app/user-profile/user-profile.component.html`) to display the user data:
+     ```html
+     <div>
+       <h2>User Profile</h2>
+       <p>Name: {{ user.name }}</p>
+       <p>Age: {{ user.age }}</p>
+     </div>
+     ```
+
+5. **Use the New Component in the App**
+
+   - Open `src/app/app.component.html` and include the `user-profile` component:
+     ```html
+     <h1>Welcome to My Angular App!</h1>
+     <app-user-profile></app-user-profile>
+     ```
+
+6. **Run the Application**
+   - Serve the application:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser to see the user profile displayed.
+
+---
+
+You've now successfully created and used a new component and service in your Angular application.
+This concludes the "Getting Started with Angular" section. Let me know when you're ready to move on to the
+next topic or if you have any questions!
