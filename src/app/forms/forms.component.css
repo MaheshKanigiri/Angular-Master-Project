@@ -31,6 +31,13 @@
   box-sizing: border-box;
 }
 
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
 /* Submit button styling */
 .submit-button {
   padding: 10px 20px;

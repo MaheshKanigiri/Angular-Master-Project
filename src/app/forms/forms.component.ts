@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forms',
@@ -7,13 +7,27 @@ import { NgForm } from '@angular/forms';
   styleUrl: './forms.component.css'
 })
 export class FormsComponent {
-  constructor() { }
+   // Reactive form group
+   userForm: FormGroup;
 
-  // onSubmit(userForm: any): void {
-  //   console.log('User Form Data:', userForm.value);
-  // }
+   constructor(private fb: FormBuilder) {
+     this.userForm = this.fb.group({
+       name: ['', Validators.required],
+       email: ['', [Validators.required, Validators.email]]
+     });
+   }
 
-  onSubmit(form: NgForm): void {
-    console.log('Form Submitted!', form.value);
-  }
+   ngOnInit(): void {}
+
+   // Reactive form submit handler
+   onSubmit(): void {
+     if (this.userForm.valid) {
+       console.log('Reactive Form Data:', this.userForm.value);
+     }
+   }
+
+   // Template-driven form submit handler
+   onSubmitF(userForm: any): void {
+     console.log('Template-driven Form Data:', userForm.value);
+   }
 }
