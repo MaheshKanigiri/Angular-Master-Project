@@ -1,0 +1,198 @@
+### 4. Components
+
+Components are the fundamental building blocks of Angular applications.
+Each component encapsulates the HTML template, CSS styles, and TypeScript logic necessary to render
+a piece of the UI.
+
+#### Key Concepts
+
+1. **Creating Components**
+2. **Component Metadata**
+3. **Component Lifecycle Hooks**
+4. **Component Interaction**
+
+---
+
+### Practical Implementation
+
+#### Step 1: Creating Components
+
+1. **Generate a New Component**
+
+   - Open the terminal in your project directory and run:
+     ```bash
+     ng generate component product
+     ```
+
+   This command creates the following files in `src/app/product/`:
+   - `product.component.ts`: The TypeScript file for the component logic.
+   - `product.component.html`: The HTML template for the component.
+   - `product.component.css`: The CSS file for the component styles.
+   - `product.component.spec.ts`: The spec file for unit tests.
+
+2. **Understanding Component Metadata**
+
+   - Open `src/app/product/product.component.ts` and observe the component metadata:
+     ```typescript
+     import { Component } from '@angular/core';
+
+     @Component({
+       selector: 'app-product',
+       templateUrl: './product.component.html',
+       styleUrls: ['./product.component.css']
+     })
+     export class ProductComponent {
+       // Component logic goes here
+     }
+     ```
+
+   The `@Component` decorator defines the metadata for the component, including the selector,
+   template URL, and styles URL.
+
+#### Step 2: Component Lifecycle Hooks
+
+Lifecycle hooks are methods that Angular calls at specific points in a component's lifecycle.
+
+1. **Implementing Lifecycle Hooks**
+
+   - Open `src/app/product/product.component.ts` and implement a few lifecycle hooks:
+     ```typescript
+     import { Component, OnInit, OnDestroy } from '@angular/core';
+
+     @Component({
+       selector: 'app-product',
+       templateUrl: './product.component.html',
+       styleUrls: ['./product.component.css']
+     })
+     export class ProductComponent implements OnInit, OnDestroy {
+
+       constructor() { }
+
+       ngOnInit(): void {
+         console.log('ProductComponent initialized');
+       }
+
+       ngOnDestroy(): void {
+         console.log('ProductComponent destroyed');
+       }
+     }
+     ```
+
+   - Add some logic to observe these hooks in action.
+
+2. **Using the Component in the App**
+
+   - Open `src/app/app.component.html` and add the `product` component:
+     ```html
+     <h1>Welcome to My Angular App!</h1>
+     <app-product></app-product>
+     ```
+
+3. **Serve the Application**
+
+   - Run the application:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser and check the console for lifecycle hook messages.
+
+#### Step 3: Component Interaction
+
+Components often need to interact with each other, typically parent-child interaction using
+`@Input` and `@Output` decorators.
+
+1. **Parent to Child Communication with @Input**
+
+   - Modify `ProductComponent` to accept an input:
+     ```typescript
+     import { Component, OnInit, Input } from '@angular/core';
+
+     @Component({
+       selector: 'app-product',
+       templateUrl: './product.component.html',
+       styleUrls: ['./product.component.css']
+     })
+     export class ProductComponent implements OnInit {
+       @Input() productName: string;
+
+       ngOnInit(): void {
+         console.log('ProductComponent initialized with product:', this.productName);
+       }
+     }
+     ```
+
+   - Update `app.component.html` to pass data to the `product` component:
+     ```html
+     <h1>Welcome to My Angular App!</h1>
+     <app-product [productName]="'Sample Product'"></app-product>
+     ```
+
+2. **Child to Parent Communication with @Output**
+
+   - Modify `ProductComponent` to emit an event:
+     ```typescript
+     import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
+     @Component({
+       selector: 'app-product',
+       templateUrl: './product.component.html',
+       styleUrls: ['./product.component.css']
+     })
+     export class ProductComponent implements OnInit {
+       @Output() productClicked: EventEmitter<string> = new EventEmitter<string>();
+
+       onClick() {
+         this.productClicked.emit(this.productName);
+       }
+
+       ngOnInit(): void {
+         console.log('ProductComponent initialized with product:', this.productName);
+       }
+     }
+     ```
+
+   - Update `product.component.html` to include a button:
+     ```html
+     <div>
+       <h2>{{ productName }}</h2>
+       <button (click)="onClick()">Click Me</button>
+     </div>
+     ```
+
+   - Update `app.component.html` to handle the emitted event:
+     ```html
+     <h1>Welcome to My Angular App!</h1>
+     <app-product [productName]="'Sample Product'" (productClicked)="onProductClick($event)"></app-product>
+     ```
+
+   - Update `app.component.ts` to define the event handler:
+     ```typescript
+     import { Component } from '@angular/core';
+
+     @Component({
+       selector: 'app-root',
+       templateUrl: './app.component.html',
+       styleUrls: ['./app.component.css']
+     })
+     export class AppComponent {
+       title = 'my-angular-app';
+
+       onProductClick(productName: string) {
+         alert(`Product clicked: ${productName}`);
+       }
+     }
+     ```
+
+#### Serve the Application Again
+
+1. Run the application:
+   ```bash
+   ng serve
+   ```
+2. Open `http://localhost:4200` in your browser and test the product click interaction.
+
+---
+
+This concludes the "Components" section. You've now learned how to create components, use component
+metadata, implement lifecycle hooks, and manage component interaction using `@Input` and `@Output`.
+Let me know when you're ready to move on to the next topic or if you have any questions!

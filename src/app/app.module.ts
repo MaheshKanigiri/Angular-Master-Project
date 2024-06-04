@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ExampleComponent } from './example/example.component';
 import { FormsModule } from '@angular/forms';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ProductComponent } from './product/product.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     AppComponent,
     ExampleComponent,
     UserProfileComponent,
+    ProductComponent,
 
   ],
   imports: [
