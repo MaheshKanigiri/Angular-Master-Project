@@ -1,0 +1,326 @@
+### 8. Angular Routing
+
+Routing in Angular allows you to create a single-page application with multiple views and navigation.
+It lets you define how the application should respond to different URLs.
+
+#### Key Concepts
+
+1. **Configuring Routes**
+2. **Router Module**
+3. **Router Outlet**
+4. **Router Link**
+5. **Route Parameters**
+6. **Nested Routes**
+7. **Guarding Routes**
+
+---
+
+### Practical Implementation
+
+#### Step 1: Setting Up Routing
+
+1. **Generate Components for Routing**
+
+   Let's create two components for demonstration purposes:
+   ```bash
+   ng generate component home
+   ng generate component about
+   ```
+
+2. **Define Routes**
+
+   Open `src/app/app-routing.module.ts` and configure the routes:
+   ```typescript
+   import { NgModule } from '@angular/core';
+   import { RouterModule, Routes } from '@angular/router';
+   import { HomeComponent } from './home/home.component';
+   import { AboutComponent } from './about/about.component';
+   import { CustomerComponent } from './customer/customer.component';
+
+   const routes: Routes = [
+     { path: '', redirectTo: '/home', pathMatch: 'full' },
+     { path: 'home', component: HomeComponent },
+     { path: 'about', component: AboutComponent },
+     { path: 'customers', component: CustomerComponent }
+   ];
+
+   @NgModule({
+     imports: [RouterModule.forRoot(routes)],
+     exports: [RouterModule]
+   })
+   export class AppRoutingModule { }
+   ```
+
+3. **Add Router Outlet**
+
+   Open `src/app/app.component.html` and add the `<router-outlet>` directive:
+   ```html
+   <nav>
+     <a routerLink="/home" routerLinkActive="active">Home</a>
+     <a routerLink="/about" routerLinkActive="active">About</a>
+     <a routerLink="/customers" routerLinkActive="active">Customers</a>
+   </nav>
+   <router-outlet></router-outlet>
+   ```
+
+#### Step 2: Using RouterLink and RouterOutlet
+
+- **RouterLink**: Directives for linking to routes.
+- **RouterOutlet**: Directive for displaying routed components.
+
+1. **Navigation Links**
+
+   Add navigation links in `src/app/app.component.html`:
+   ```html
+   <nav>
+     <a routerLink="/home" routerLinkActive="active">Home</a>
+     <a routerLink="/about" routerLinkActive="active">About</a>
+     <a routerLink="/customers" routerLinkActive="active">Customers</a>
+   </nav>
+   <router-outlet></router-outlet>
+   ```
+
+2. **Define Component Templates**
+
+   - Open `src/app/home/home.component.html`:
+     ```html
+     <h2>Home Page</h2>
+     <p>Welcome to the Home Page!</p>
+     ```
+
+   - Open `src/app/about/about.component.html`:
+     ```html
+     <h2>About Page</h2>
+     <p>This is the About Page.</p>
+     ```
+
+   - Open `src/app/customer/customer.component.html` (if not already):
+     ```html
+     <div>
+       <h2>Customer List</h2>
+       <ul>
+         <li *ngFor="let customer of customers; let i = index">
+           {{ customer }}
+           <button (click)="startEditing(i)">Edit</button>
+           <button (click)="deleteCustomer(i)">Delete</button>
+         </li>
+       </ul>
+       <input *ngIf="editingIndex === null" type="text" #customerName placeholder="Enter customer name">
+       <button *ngIf="editingIndex === null" (click)="addCustomer(customerName.value)">Add Customer</button>
+       <div *ngIf="editingIndex !== null">
+         <input type="text" [(ngModel)]="editingName">
+         <button (click)="updateCustomer()">Update Customer</button>
+       </div>
+     </div>
+     ```
+
+#### Step 3: Route Parameters
+
+1. **Generate a Customer Detail Component**
+
+   ```bash
+   ng generate component customer-detail
+   ```
+
+2. **Add a Route with a Parameter**
+
+   Open `src/app/app-routing.module.ts` and add a route for the customer detail:
+   ```typescript
+   import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
+
+   const routes: Routes = [
+     { path: '', redirectTo: '/home', pathMatch: 'full' },
+     { path: 'home', component: HomeComponent },
+     { path: 'about', component: AboutComponent },
+     { path: 'customers', component: CustomerComponent },
+     { path: 'customer/:id', component: CustomerDetailComponent }
+   ];
+   ```
+
+3. **Retrieve Route Parameter**
+
+   Open `src/app/customer-detail/customer-detail.component.ts`:
+   ```typescript
+   import { Component, OnInit } from '@angular/core';
+   import { ActivatedRoute } from '@angular/router';
+
+   @Component({
+     selector: 'app-customer-detail',
+     templateUrl: './customer-detail.component.html',
+     styleUrls: ['./customer-detail.component.css']
+   })
+   export class CustomerDetailComponent implements OnInit {
+     customerId: string | null = '';
+
+     constructor(private route: ActivatedRoute) { }
+
+     ngOnInit(): void {
+       this.customerId = this.route.snapshot.paramMap.get('id');
+     }
+   }
+   ```
+
+4. **Customer Detail Template**
+
+   Open `src/app/customer-detail/customer-detail.component.html`:
+   ```html
+   <h2>Customer Detail</h2>
+   <p>Customer ID: {{ customerId }}</p>
+   ```
+
+5. **Link to Customer Detail**
+
+   Update `src/app/customer/customer.component.html`:
+   ```html
+   <div>
+     <h2>Customer List</h2>
+     <ul>
+       <li *ngFor="let customer of customers; let i = index">
+         <a [routerLink]="['/customer', i]">{{ customer }}</a>
+         <button (click)="startEditing(i)">Edit</button>
+         <button (click)="deleteCustomer(i)">Delete</button>
+       </li>
+     </ul>
+     <input *ngIf="editingIndex === null" type="text" #customerName placeholder="Enter customer name">
+     <button *ngIf="editingIndex === null" (click)="addCustomer(customerName.value)">Add Customer</button>
+     <div *ngIf="editingIndex !== null">
+       <input type="text" [(ngModel)]="editingName">
+       <button (click)="updateCustomer()">Update Customer</button>
+     </div>
+   </div>
+   ```
+
+### Testing
+
+- Serve the application:
+  ```bash
+  ng serve
+  ```
+- Open `http://localhost:4200` in your browser and navigate through the Home, About, and Customers pages.
+Test the customer details route by clicking on a customer name.
+
+---
+
+You have now learned how to set up routing in an Angular application, including defining routes, using router
+links, and handling route parameters. Let me know if you're ready to move on to the next topic or if you
+have any questions!
+-------------------------------------------------------------------------------------------
+
+Sure! Let's incorporate routing into your existing `app.component.html` structure. We'll add routes for each of the sections (components) you mentioned and configure the navigation accordingly.
+
+### Step-by-Step Guide to Implement Routing
+
+#### Step 1: Define Routes
+
+First, let's define the routes for the components in your `app.component.html`.
+
+1. **Modify `app-routing.module.ts`**:
+
+   ```typescript
+   import { NgModule } from '@angular/core';
+   import { RouterModule, Routes } from '@angular/router';
+   import { ExampleComponent } from './example/example.component';
+   import { UserProfileComponent } from './user-profile/user-profile.component';
+   import { ProductComponent } from './product/product.component';
+   import { CustomerComponent } from './customer/customer.component';
+   import { CustomerAccessComponent } from './customer-access/customer-access.component';
+
+   const routes: Routes = [
+     { path: '', redirectTo: '/example', pathMatch: 'full' },
+     { path: 'example', component: ExampleComponent },
+     { path: 'user-profile', component: UserProfileComponent },
+     { path: 'product', component: ProductComponent },
+     { path: 'customer', component: CustomerComponent },
+     { path: 'customer-access', component: CustomerAccessComponent }
+   ];
+
+   @NgModule({
+     imports: [RouterModule.forRoot(routes)],
+     exports: [RouterModule]
+   })
+   export class AppRoutingModule { }
+   ```
+
+#### Step 2: Add Router Outlet
+
+Modify `app.component.html` to include navigation links and a `<router-outlet>` for rendering routed components.
+
+1. **Update `app.component.html`**:
+
+   ```html
+   <div class="container">
+     <h1>Welcome to My Angular App!</h1>
+
+     <nav>
+       <a routerLink="/example" routerLinkActive="active">Example</a> |
+       <a routerLink="/user-profile" routerLinkActive="active">User Profile</a> |
+       <a routerLink="/product" routerLinkActive="active">Product</a> |
+       <a routerLink="/customer" routerLinkActive="active">Customer</a> |
+       <a routerLink="/customer-access" routerLinkActive="active">Customer Access</a>
+     </nav>
+
+     <hr>
+
+     <router-outlet></router-outlet>
+   </div>
+   ```
+
+#### Step 3: Update Component Templates
+
+Ensure that the templates for your components are defined correctly.
+
+- **ExampleComponent (`example.component.html`)**:
+
+  ```html
+  <h2>Example Section</h2>
+  <app-example></app-example>
+  ```
+
+- **UserProfileComponent (`user-profile.component.html`)**:
+
+  ```html
+  <h2>User Profile Section</h2>
+  <app-user-profile></app-user-profile>
+  ```
+
+- **ProductComponent (`product.component.html`)**:
+
+  ```html
+  <h2>Product Section</h2>
+  <app-product [productName]="'Sample Product'" (productClicked)="onProductClick($event)"></app-product>
+  ```
+
+- **CustomerComponent (`customer.component.html`)**:
+
+  ```html
+  <h2>Customer Section</h2>
+  <app-customer></app-customer>
+  ```
+
+- **CustomerAccessComponent (`customer-access.component.html`)**:
+
+  ```html
+  <h2>Customer Access Section</h2>
+  <app-customer-access></app-customer-access>
+  ```
+
+#### Step 4: Handling Route Parameters (Optional)
+
+If you have routes with parameters, such as for a specific customer, you can handle them similarly
+to how we did in the previous section. For now, this is optional and can be added based on your
+requirements.
+
+### Testing
+
+1. **Serve the application**:
+   ```bash
+   ng serve
+   ```
+
+2. **Navigate to your application**:
+   Open `http://localhost:4200` in your browser and use the navigation links to switch
+   between different sections of your application.
+
+This setup will allow you to navigate between different sections (components) using Angular's
+routing mechanism while keeping your existing structure intact.
+Let me know if you need further customization or additional features!

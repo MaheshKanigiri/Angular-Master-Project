@@ -1,13 +1,15 @@
 <div class="container">
-
   <h1>Welcome to My Angular App!</h1>
-  <app-example></app-example>   <!--2.Section-->
+
+  <nav>
+    <a routerLink="/example" routerLinkActive="active">Example</a> |
+    <a routerLink="/user-profile" routerLinkActive="active">User Profile</a> |
+    <a routerLink="/product" routerLinkActive="active">Product</a> |
+    <a routerLink="/customer" routerLinkActive="active">Customer</a> |
+    <a routerLink="/customer-access" routerLinkActive="active">Customer Access</a>
+  </nav>
+
   <hr>
-  <app-user-profile></app-user-profile> <!--3.Section-->
-  <hr>
-  <app-product [productName]="'Sample Product'" (productClicked)="onProductClick($event)"></app-product> <!--4.Section-->
-  <hr>
-  <app-customer></app-customer>
-  <hr>
-  <app-customer-access></app-customer-access>
+
+  <router-outlet></router-outlet>
 </div>
