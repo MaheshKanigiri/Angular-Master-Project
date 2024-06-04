@@ -1,10 +1,20 @@
 <p>customer-access works!</p>
-<div>
+<div class="container">
   <h2>Customer List</h2>
-  <ul>
-    <li *ngFor="let customer of customers">{{ customer }}</li>
+  <ul class="customer-list">
+    <li *ngFor="let customer of customers ; let i = index" class="customer-item">
+      {{ customer }}
+      <button (click)="startEditing(i)" class="edit-button">Edit</button>
+      <button (click)="deleteCustomer(i)" class="delete-button">Delete</button>
+    </li>
   </ul>
-  <input type="text" #customerName placeholder="Enter customer name">
-  <button (click)="addCustomer(customerName.value)">Add Customer</button>
+  <div *ngIf="editingIndex === null" class="add-customer">
+    <input type="text" #customerName placeholder="Enter customer name" class="customer-input">
+    <button (click)="addCustomer(customerName.value)" class="add-button">Add Customer</button>
+  </div>
+  <div *ngIf="editingIndex !== null" class="edit-customer">
+    <input type="text" [(ngModel)]="editingName" class="customer-input">
+    <button (click)="updateCustomer()" class="update-button">Update Customer</button>
+  </div>
 </div>
 

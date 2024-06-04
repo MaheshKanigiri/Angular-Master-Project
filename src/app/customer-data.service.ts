@@ -16,4 +16,16 @@ export class CustomerDataService {
   addCustomer(name: string): void {
     this.customers.push(name);
   }
+
+  updateCustomer(index: number, name: string): void {
+    if (index >= 0 && index < this.customers.length) {
+      this.customers[index] = name;
+    }
+  }
+
+  deleteCustomer(index: number): void {
+    if (index >= 0 && index < this.customers.length) {
+      this.customers.splice(index, 1);
+    }
+  }
 }
