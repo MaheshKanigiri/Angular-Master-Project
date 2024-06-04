@@ -13,4 +13,30 @@ export class CustomerComponent {
   orders: string[] = ['Order 1', 'Order 2', 'Order 3'];
 
   status: string = 'active'; // could be 'active', 'inactive', 'pending'
+
+  get statusColor(): string {
+    switch (this.status) {
+      case 'active':
+        return 'blue';
+      case 'inactive':
+        return 'gray';
+      case 'pending':
+        return 'orange';
+      default:
+        return 'black';
+    }
+  }
+
+  get statusMessage(): string {
+    switch (this.status) {
+      case 'active':
+        return 'Active Customer';
+      case 'inactive':
+        return 'Inactive Customer';
+      case 'pending':
+        return 'Pending Customer';
+      default:
+        return 'Unknown Status';
+    }
+  }
 }

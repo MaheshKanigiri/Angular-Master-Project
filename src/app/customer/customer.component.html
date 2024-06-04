@@ -1,21 +1,31 @@
 <p>customerComponent works!</p>
-<div>
+<ng-container>
   <h2>Customer Details</h2>
   <p>Name: {{ customerName }}</p>
   <p>Age: {{ customerAge }}</p>
-  <p *ngIf="isPremium">Premium Customer</p>
-  <p *ngIf="!isPremium">Regular Customer</p>
+  <p [ngClass]="{'premium': isPremium, 'regular': !isPremium}">
+    {{ isPremium ? 'Premium Customer' : 'Regular Customer' }}
+  </p>
   <!--ngFor-->
   <h3>Orders</h3>
   <ul>
     <li *ngFor="let order of orders">{{ order }}</li>
   </ul>
-  <!--ngSwitch-->
-  <h3>Status</h3>
-  <div [ngSwitch]="status">
-    <p *ngSwitchCase="'active'">Active Customer</p>
-    <p *ngSwitchCase="'inactive'">Inactive Customer</p>
-    <p *ngSwitchCase="'pending'">Pending Customer</p>
-    <p *ngSwitchDefault>Unknown Status</p>
-  </div>
-</div>
+
+   <!--ngSwitch-->
+   <h4>Status</h4>
+   <div [ngSwitch]="status">
+     <h5 *ngSwitchCase="'active'">
+       <p [ngStyle]="{'font-weight': 'bold', 'color': 'blue'}">Active Customer</p>
+     </h5>
+     <h5 *ngSwitchCase="'inactive'">
+       <p [ngStyle]="{'font-weight': 'bold', 'color': 'gray'}">Inactive Customer</p>
+     </h5>
+     <h5 *ngSwitchCase="'pending'">
+       <p [ngStyle]="{'font-weight': 'bold', 'color': 'orange'}">Pending Customer</p>
+     </h5>
+     <h5 *ngSwitchDefault>
+       <p [ngStyle]="{'font-weight': 'bold', 'color': 'black'}">Unknown Status</p>
+     </h5>
+    </div>
+  </ng-container>
