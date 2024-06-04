@@ -1,0 +1,117 @@
+Sure! Let's move on to the next section.
+
+### 7. Services and Dependency Injection
+
+In Angular, services are used to encapsulate logic that isn't specific to a single component.
+They provide a way for components to share data and functionality across the application.
+
+Dependency Injection (DI) is a core concept in Angular that allows components to receive instances
+of services they depend on.
+
+#### Key Concepts
+
+1. **Creating Services**
+2. **Injecting Services**
+3. **Providing Services**
+4. **Singleton Services**
+
+---
+
+### Practical Implementation
+
+#### Step 1: Creating a Service
+
+Let's create a simple service to manage customer data.
+
+1. **Generate a Service**
+
+   - Open the terminal in your project directory and run:
+     ```bash
+     ng generate service customer-data
+     ```
+
+2. **Implement `CustomerDataService`**
+
+   - Open `src/app/customer-data.service.ts` and define the service:
+     ```typescript
+     import { Injectable } from '@angular/core';
+
+     @Injectable({
+       providedIn: 'root'
+     })
+     export class CustomerDataService {
+       customers: string[] = ['John', 'Jane', 'Doe'];
+
+       constructor() { }
+
+       getCustomers(): string[] {
+         return this.customers;
+       }
+
+       addCustomer(name: string): void {
+         this.customers.push(name);
+       }
+     }
+     ```
+
+#### Step 2: Using the Service in a Component
+
+Now, let's use the `CustomerDataService` in a component to display and add customers.
+
+1. **Modify `CustomerComponent`**
+
+   - Open `src/app/customer/customer.component.ts` and inject `CustomerDataService`:
+     ```typescript
+     import { Component, OnInit } from '@angular/core';
+     import { CustomerDataService } from '../customer-data.service';
+
+     @Component({
+       selector: 'app-customer',
+       templateUrl: './customer.component.html',
+       styleUrls: ['./customer.component.css']
+     })
+     export class CustomerComponent implements OnInit {
+       customers: string[] = [];
+
+       constructor(private customerDataService: CustomerDataService) { }
+
+       ngOnInit(): void {
+         this.customers = this.customerDataService.getCustomers();
+       }
+
+       addCustomer(name: string): void {
+         this.customerDataService.addCustomer(name);
+         this.customers = this.customerDataService.getCustomers();
+       }
+     }
+     ```
+
+2. **Update the Template**
+
+   - Open `src/app/customer/customer.component.html` and update the template to display customers and add new ones:
+     ```html
+     <div>
+       <h2>Customer List</h2>
+       <ul>
+         <li *ngFor="let customer of customers">{{ customer }}</li>
+       </ul>
+       <input type="text" #customerName placeholder="Enter customer name">
+       <button (click)="addCustomer(customerName.value)">Add Customer</button>
+     </div>
+     ```
+
+#### Step 3: Providing the Service
+
+By default, Angular creates a single instance of a service for the entire application. We've already set `providedIn: 'root'` in our service, which achieves this behavior.
+
+#### Step 4: Testing
+
+- Serve the application:
+  ```bash
+  ng serve
+  ```
+- Open `http://localhost:4200` in your browser and test adding and displaying customers.
+
+---
+
+You've now learned how to create a service, inject it into a component, and use it to share data and functionality across your Angular application. Let me know if you're ready to move on to the next topic or if you have any questions!
