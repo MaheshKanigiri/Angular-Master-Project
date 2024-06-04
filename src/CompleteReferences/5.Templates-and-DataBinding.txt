@@ -1,0 +1,219 @@
+### 5. Templates and Data Binding
+
+Templates in Angular define the view for a component.
+Data binding allows you to synchronize data between the component's logic and the template.
+
+#### Key Concepts
+
+1. **Interpolation**
+2. **Property Binding**
+3. **Event Binding**
+4. **Two-way Binding**
+5. **Template Syntax**
+
+---
+
+### Practical Implementation
+
+#### Step 1: Interpolation
+
+Interpolation allows you to embed expressions into the template.
+
+1. **Update `ProductComponent` to use Interpolation**
+   - Open `src/app/product/product.component.ts` and add a property:
+     ```typescript
+     export class ProductComponent {
+       @Input() productName: string;
+       productDescription: string = 'This is a great product!';
+     }
+     ```
+
+   - Update `product.component.html` to display the product description using interpolation:
+     ```html
+     <div>
+       <h2>{{ productName }}</h2>
+       <p>{{ productDescription }}</p>
+     </div>
+     ```
+
+2. **Serve the Application**
+   - Run the application and verify the description is displayed correctly:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser.
+
+#### Step 2: Property Binding
+
+Property binding allows you to bind values to properties of HTML elements.
+
+1. **Add an Image Property in `ProductComponent`**
+   - Open `src/app/product/product.component.ts` and add a property for the image URL:
+     ```typescript
+     export class ProductComponent {
+       @Input() productName: string;
+       productDescription: string = 'This is a great product!';
+       productImage: string = 'https://via.placeholder.com/150';
+     }
+     ```
+
+   - Update `product.component.html` to bind the image URL to the `src` property of an `img` tag:
+     ```html
+     <div>
+       <h2>{{ productName }}</h2>
+       <img [src]="productImage" alt="{{ productName }}">
+       <p>{{ productDescription }}</p>
+     </div>
+     ```
+
+2. **Serve the Application**
+   - Run the application and verify the image is displayed correctly:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser.
+
+#### Step 3: Event Binding
+
+Event binding allows you to listen to events such as clicks and key presses.
+
+1. **Add a Click Event Handler in `ProductComponent`**
+   - Open `src/app/product/product.component.ts` and add a method to handle button clicks:
+     ```typescript
+     export class ProductComponent {
+       @Input() productName: string;
+       productDescription: string = 'This is a great product!';
+       productImage: string = 'https://via.placeholder.com/150';
+
+       onBuy() {
+         alert(`You bought ${this.productName}!`);
+       }
+     }
+     ```
+
+   - Update `product.component.html` to bind the `click` event of a button to the `onBuy` method:
+     ```html
+     <div>
+       <h2>{{ productName }}</h2>
+       <img [src]="productImage" alt="{{ productName }}">
+       <p>{{ productDescription }}</p>
+       <button (click)="onBuy()">Buy</button>
+     </div>
+     ```
+
+2. **Serve the Application**
+   - Run the application and test the button click:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser.
+
+#### Step 4: Two-way Binding
+
+Two-way binding allows you to synchronize data between the model and the view.
+This is commonly used in forms.
+
+1. **Add a Product Quantity Property in `ProductComponent`**
+   - Open `src/app/product/product.component.ts` and add a property for the product quantity:
+     ```typescript
+     export class ProductComponent {
+       @Input() productName: string;
+       productDescription: string = 'This is a great product!';
+       productImage: string = 'https://via.placeholder.com/150';
+       productQuantity: number = 1;
+     }
+     ```
+
+   - Update `product.component.html` to use two-way binding for the product quantity input:
+     ```html
+     <div>
+       <h2>{{ productName }}</h2>
+       <img [src]="productImage" alt="{{ productName }}">
+       <p>{{ productDescription }}</p>
+       <input type="number" [(ngModel)]="productQuantity">
+       <p>Quantity: {{ productQuantity }}</p>
+       <button (click)="onBuy()">Buy</button>
+     </div>
+     ```
+
+   - Ensure `FormsModule` is imported in `AppModule` (`app.module.ts`):
+     ```typescript
+     import { FormsModule } from '@angular/forms';
+
+     @NgModule({
+       declarations: [
+         AppComponent,
+         ProductComponent
+       ],
+       imports: [
+         BrowserModule,
+         FormsModule
+       ],
+       providers: [],
+       bootstrap: [AppComponent]
+     })
+     export class AppModule { }
+     ```
+
+2. **Serve the Application**
+   - Run the application and test the quantity input:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser.
+
+#### Step 5: Template Syntax
+
+Angular provides a rich syntax for templates that includes:
+
+- **ngClass** and **ngStyle** for conditional styling
+- **ngIf**, **ngFor**, and **ngSwitch** for conditional rendering
+
+1. **Conditional Styling with `ngClass`**
+   - Add a property for product availability in `ProductComponent`:
+     ```typescript
+     export class ProductComponent {
+       @Input() productName: string;
+       productDescription: string = 'This is a great product!';
+       productImage: string = 'https://via.placeholder.com/150';
+       productQuantity: number = 1;
+       isAvailable: boolean = true;
+     }
+     ```
+
+   - Update `product.component.html` to use `ngClass` for conditional styling:
+     ```html
+     <div [ngClass]="{ 'available': isAvailable, 'unavailable': !isAvailable }">
+       <h2>{{ productName }}</h2>
+       <img [src]="productImage" alt="{{ productName }}">
+       <p>{{ productDescription }}</p>
+       <input type="number" [(ngModel)]="productQuantity">
+       <p>Quantity: {{ productQuantity }}</p>
+       <p *ngIf="isAvailable">In Stock</p>
+       <p *ngIf="!isAvailable">Out of Stock</p>
+       <button (click)="onBuy()">Buy</button>
+     </div>
+     ```
+
+   - Add styles in `product.component.css`:
+     ```css
+     .available {
+       border: 1px solid green;
+     }
+     .unavailable {
+       border: 1px solid red;
+     }
+     ```
+
+2. **Serve the Application**
+   - Run the application and verify the conditional styling:
+     ```bash
+     ng serve
+     ```
+   - Open `http://localhost:4200` in your browser.
+
+---
+
+You've now learned how to use interpolation, property binding, event binding, two-way binding,
+and template syntax in Angular. Let me know when you're ready to move on to the next topic or
+if you have any questions!

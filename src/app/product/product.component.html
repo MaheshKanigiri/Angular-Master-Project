@@ -1,5 +1,11 @@
 <h3>ProductComponent works!</h3>
 <div>
-  <h2>{{ productName }}</h2>
+  <div class="product-card">
+    <!--by string interpolation-->
+    <h2>{{ productName }}</h2>
+    <!--by property binding-->
+    <img [src]="productImage" alt="{{ productName }}" class="product-image">
+    <p>{{ productDescription }}</p>
+  </div>
   <button (click)="onClick()">Click Me</button>
 </div>
