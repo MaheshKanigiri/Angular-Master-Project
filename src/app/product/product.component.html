@@ -6,6 +6,8 @@
     <!--by property binding-->
     <img [src]="productImage" alt="{{ productName }}" class="product-image">
     <p>{{ productDescription }}</p>
+    <input type="number" [(ngModel)]="productQuantity">
+    <p>Quantity: {{ productQuantity }}</p>
     <button (click)="onBuy()">BuyProduct</button>
   </div>
 </div>
