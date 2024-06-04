@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-product',
@@ -11,6 +11,12 @@ export class ProductComponent implements OnInit{
   //Parent to Child Communication with @Input
   @Input()
   productName!: string;
+
+  @Output() productClicked: EventEmitter<string> = new EventEmitter<string>();
+
+  onClick() {
+    this.productClicked.emit(this.productName);
+  }
 
   ngOnInit(): void {
     console.log('ProductComponent initialized with product:', this.productName);

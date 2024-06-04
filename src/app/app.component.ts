@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-master-project';
+
+  onProductClick(productName: string) {
+    alert(`Product clicked: ${productName}`);
+  }
 }
