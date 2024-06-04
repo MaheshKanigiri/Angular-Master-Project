@@ -1,18 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
-export class ProductComponent implements OnInit, OnDestroy{
+export class ProductComponent implements OnInit{
   constructor() { }
 
-  ngOnInit(): void {
-    console.log('ProductComponent initialized');
-  }
+  //Parent to Child Communication with @Input
+  @Input()
+  productName!: string;
 
-  ngOnDestroy(): void {
-    console.log('ProductComponent destroyed');
+  ngOnInit(): void {
+    console.log('ProductComponent initialized with product:', this.productName);
   }
 }
