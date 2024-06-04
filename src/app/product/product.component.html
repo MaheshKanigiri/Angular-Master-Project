@@ -1,6 +1,6 @@
 <h3>ProductComponent works!</h3>
 <div>
-  <div class="product-card" >
+  <div class="product-card" [ngClass]="{ 'available': isAvailable, 'unavailable': !isAvailable }">
     <!--by string interpolation-->
     <h2>{{ productName }}</h2>
     <!--by property binding-->

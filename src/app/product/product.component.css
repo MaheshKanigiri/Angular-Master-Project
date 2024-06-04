@@ -31,3 +31,10 @@
   button:hover {
     background-color: #0056b3;
   }
+
+  .available {
+    border: 1px solid green;
+  }
+  .unavailable {
+    border: 1px solid red;
+  }
