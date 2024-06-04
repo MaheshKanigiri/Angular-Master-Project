@@ -10,6 +10,9 @@ import { ProductComponent } from './product/product.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomerAccessComponent } from './customer-access/customer-access.component';
 import { FormsComponent } from './forms/forms.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+import { HttpDemoComponent } from './http-demo/http-demo.component';
 
 
 @NgModule({
@@ -21,6 +24,7 @@ import { FormsComponent } from './forms/forms.component';
     CustomerComponent,
     CustomerAccessComponent,
     FormsComponent,
+    HttpDemoComponent,
 
   ],
   imports: [
@@ -28,9 +32,11 @@ import { FormsComponent } from './forms/forms.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

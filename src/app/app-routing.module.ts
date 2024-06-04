@@ -6,6 +6,7 @@ import { ProductComponent } from './product/product.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomerAccessComponent } from './customer-access/customer-access.component';
 import { FormsComponent } from './forms/forms.component';
+import { HttpDemoComponent } from './http-demo/http-demo.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/example', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'product', component: ProductComponent },
   { path: 'customer', component: CustomerComponent },
   { path: 'customer-access', component: CustomerAccessComponent },
-  { path: 'forms', component: FormsComponent }
+  { path: 'forms', component: FormsComponent },
+  { path: 'http-demo', component: HttpDemoComponent }
 ];
 
 
